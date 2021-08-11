@@ -3,6 +3,7 @@ package handler
 import (
     "github.com/gin-gonic/gin"
     "github.com/GSlon/todoGO/internal/entity"
+    _ "github.com/sirupsen/logrus"
     "strconv"
     "net/http"
 )

@@ -14,7 +14,7 @@ type Authorization interface {
 type TodoItem interface {
     Create(userId int, item entity.TodoItem) (int, error)
     GetAllItems(userId int) ([]entity.TodoItem, error)
-    GetItemById(id int) (entity.TodoItem, error)
+    GetItemById(itemId int) (entity.TodoItem, error)
     Delete(itemId int) error
     Update(itemId int, input entity.UpdateTodoItem) error
 }
@@ -27,5 +27,7 @@ type Repository struct {
 // dependency inversion (абстрагируемся от конкретной БД)
 func NewRepository(db *sqlx.DB) *Repository {
     return &Repository{
-            Authorization: NewAuthPostgres(db)}
+            Authorization: NewAuthPostgres(db),
+            TodoItem: NewTodoItemPostgres(db),
+    }
 }

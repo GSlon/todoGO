@@ -25,15 +25,16 @@ func (h *Handler) InitRoutes() *gin.Engine {
     list := router.Group("/list")
     {
         list.GET("/:id", h.getAllItems)       // id юзера
-
-        item := list.Group("/item")
-        {
-            item.POST("/", h.createItem)
-            item.GET("/:itemid", h.getItemById)
-            item.DELETE("/:itemid", h.deleteItem)
-            item.PUT("/:itemid", h.updateItem)
-        }
     }
+
+    item := router.Group("/item")
+    {
+        item.POST("/", h.createItem)
+        item.GET("/:itemid", h.getItemById)
+        item.DELETE("/:itemid", h.deleteItem)
+        item.PUT("/:itemid", h.updateItem)
+    }
+
 
     return router
 }

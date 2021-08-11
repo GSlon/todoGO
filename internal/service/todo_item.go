@@ -10,16 +10,6 @@ type TodoItemService struct {
     userRepo repository.Authorization
 }
 
-func getUserById(userId int, s *TodoItemService) (entity.User, error) {
-    user, err := s.userRepo.GetUserById(userId)
-    if err != nil {
-        // user not found
-        return user, err
-    }
-
-    return user, nil
-}
-
 func (s *TodoItemService) Create(userId int, item entity.TodoItem) (int, error) {
     _, err := s.userRepo.GetUserById(userId)
     if err != nil {
@@ -48,9 +38,14 @@ func (s *TodoItemService) Update(itemId int, input entity.UpdateTodoItem) error 
     return s.repo.Update(itemId, input)
 }
 
-func NewTodoItemService(repo repository.TodoItem) *TodoItemService {
+func (s *TodoItemService) GetItemById(itemId int) (entity.TodoItem, error) {
+    return s.repo.GetItemById(itemId)
+}
+
+func NewTodoItemService(repo repository.TodoItem, userRepo repository.Authorization) *TodoItemService {
     return &TodoItemService{
         repo: repo,
+        userRepo: userRepo,
     }
 }
 
