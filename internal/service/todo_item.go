@@ -10,7 +10,7 @@ type TodoItemService struct {
     userRepo repository.Authorization
 }
 
-func (s *TodoItemService) Create(userId int, item entity.TodoItem) (int, error) {
+func (s *TodoItemService) Create(userId int, item entity.UpdateTodoItem) (int, error) {
     _, err := s.userRepo.GetUserById(userId)
     if err != nil {
         // user not found

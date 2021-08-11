@@ -10,7 +10,7 @@ type TodoItemPostgres struct {
     db *sqlx.DB
 }
 
-func (p *TodoItemPostgres) Create(userId int, item entity.TodoItem) (int, error) {
+func (p *TodoItemPostgres) Create(userId int, item entity.UpdateTodoItem) (int, error) {
     query := fmt.Sprintf("INSERT INTO %s (title, description, user_id) values ($1, $2, $3) RETURNING id",
                          todoitemsTable)
 
@@ -37,7 +37,7 @@ func (p *TodoItemPostgres) GetAllItems(userId int) ([]entity.TodoItem, error) {
 
 func (p *TodoItemPostgres) GetItemById(id int) (entity.TodoItem, error) {
     var item entity.TodoItem
-	query := fmt.Sprintf("SELECT id, title, description, FROM %s WHERE id = $1", todoitemsTable)
+	query := fmt.Sprintf("SELECT id, title, description FROM %s WHERE id = $1", todoitemsTable)
 
 	if err := p.db.Get(&item, query, id); err != nil {
 		return item, err

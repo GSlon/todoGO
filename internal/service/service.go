@@ -12,7 +12,7 @@ type Authorization interface {
 }
 
 type TodoItem interface {
-    Create(userId int, item entity.TodoItem) (int, error)
+    Create(userId int, item entity.UpdateTodoItem) (int, error)
     GetAllItems(userId int) ([]entity.TodoItem, error)
     GetItemById(id int) (entity.TodoItem, error)
     Delete(itemId int) error

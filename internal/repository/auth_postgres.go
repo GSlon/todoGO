@@ -4,6 +4,7 @@ import (
     "github.com/jmoiron/sqlx"
     "github.com/GSlon/todoGO/internal/entity"
     "fmt"
+    "strconv"
 )
 
 type AuthPostgres struct {
@@ -29,8 +30,8 @@ func (p *AuthPostgres) GetUser(user entity.SignInUser) (int, error) {
     query := fmt.Sprintf("SELECT id FROM %s WHERE name=$1 AND password_hash=$2",
                          userTable)
 
-    row := p.db.QueryRow(query, user.Name, user.Password)
-    if err := row.Scan(&id); err != nil {
+    //row := p.db.QueryRow(query, user.Name, user.Password)
+    if err := p.db.Get(&id, query, user.Name, user.Password); err != nil {
         return 0, err
     }
 
@@ -42,8 +43,8 @@ func (p *AuthPostgres) GetUserById(id int) (entity.User, error) {
     query := fmt.Sprintf("SELECT name, surname, password_hash FROM %s WHERE id=$1",
                          userTable)
 
-    row := p.db.QueryRow(query, id)
-    if err := row.Scan(&user); err != nil {
+    //row := p.db.QueryRow(query, id)
+    if err := p.db.Get(&user, query, strconv.Itoa(id)); err != nil {
         return user, err
     }
 

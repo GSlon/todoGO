@@ -44,7 +44,7 @@ func (h *Handler) createItem(c *gin.Context) {
         return
     }
 
-    input, err :=  parseContextJSON(c)
+    input, err :=  parseInputContextJSON(c)
     if err != nil {
         return
     }
