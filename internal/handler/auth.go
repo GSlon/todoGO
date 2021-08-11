@@ -26,7 +26,7 @@ func (h *Handler) signin(c *gin.Context) {
 
     logrus.Info(fmt.Sprintf("Redirect to %d", id))
 
-    c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/api/lists/%d", id))
+    c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/list/%d/", id))
 }
 
 // валидация и передача в service(бизнес-логику)

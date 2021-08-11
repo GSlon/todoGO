@@ -24,6 +24,10 @@ func (s *AuthService) GetUser(user entity.SignInUser) (int, error) {
     return s.repoauth.GetUser(user)
 }
 
+func (s *AuthService) GetUserById(id int) (entity.User, error) {
+    return s.repoauth.GetUserById(id)
+}
+
 func (s *AuthService) generatePasswordHash(password string) string {
     hasher := sha1.New()
     hasher.Write([]byte(password))

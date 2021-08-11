@@ -37,7 +37,18 @@ func (p *AuthPostgres) GetUser(user entity.SignInUser) (int, error) {
     return id, nil
 }
 
+func (p *AuthPostgres) GetUserById(id int) (entity.User, error) {
+    var user entity.User
+    query := fmt.Sprintf("SELECT name, surname, password_hash FROM %s WHERE id=$1",
+                         userTable)
 
+    row := p.db.QueryRow(query, id)
+    if err := row.Scan(&user); err != nil {
+        return user, err
+    }
+
+    return user, nil
+}
 
 func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
     return &AuthPostgres{db: db}

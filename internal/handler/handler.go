@@ -22,19 +22,16 @@ func (h *Handler) InitRoutes() *gin.Engine {
         auth.POST("/signup", h.signup)
     }
 
-    api := router.Group("/api")
+    list := router.Group("/list")
     {
-        list := api.Group("/list")
-        {
-            list.GET("/:id", h.getListById)    // id юзера
+        list.GET("/:id", h.getAllItems)       // id юзера
 
-            item := list.Group("/item")
-            {
-                item.POST("/:id", h.createItem)   // id item'a
-                item.GET("/:id", h.getItemById)
-                item.DELETE("/:id", h.deleteItem)
-                item.PUT("/:id", h.updateItem)
-            }
+        item := list.Group("/item")
+        {
+            item.POST("/", h.createItem)
+            item.GET("/:itemid", h.getItemById)
+            item.DELETE("/:itemid", h.deleteItem)
+            item.PUT("/:itemid", h.updateItem)
         }
     }
 
